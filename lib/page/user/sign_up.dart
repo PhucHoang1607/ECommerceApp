@@ -1,5 +1,6 @@
 import 'package:e_commerce_app_project/components/CustomeTextFormField.dart';
 import 'package:e_commerce_app_project/components/little_components.dart';
+import 'package:e_commerce_app_project/page/user/personal_information.dart';
 import 'package:e_commerce_app_project/page/user/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -251,6 +252,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: buttonCustome,
                     onPressed: () {
                       //Where you have to make Sign In to Home Page with real Data
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (page) => PersonalInformation()));
                     },
                     child: Text(
                       "Sign Up",

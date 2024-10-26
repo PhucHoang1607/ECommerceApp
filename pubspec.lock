@@ -121,19 +121,19 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
+  floating_bottom_navigation_bar:
+    dependency: "direct main"
+    description:
+      name: floating_bottom_navigation_bar
+      sha256: "2ecffcb10841c8bf1a084adaef544ecd5451577b31bd80767e6bab1875c941a6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.2"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_floating_bottom_bar:
-    dependency: "direct main"
-    description:
-      name: flutter_floating_bottom_bar
-      sha256: "5aff247b2015837bd121b6c694fb30107ed5677cd74e3088f6a5a18e369bc0ec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1+1"
   flutter_lints:
     dependency: "direct dev"
     description:

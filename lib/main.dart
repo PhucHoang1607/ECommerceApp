@@ -1,4 +1,5 @@
 import 'package:e_commerce_app_project/page/home.dart';
+import 'package:e_commerce_app_project/page/main_cover_screen.dart';
 import 'package:e_commerce_app_project/page/started/splashed_screen.dart';
 import 'package:e_commerce_app_project/page/user/personal_information.dart';
 import 'package:e_commerce_app_project/page/user/sign_in.dart';
@@ -62,6 +63,6 @@ void main() {
                 fontSize: 16),
           ),
     ),
-    home: HomeScreen(),
+    home: SplashedScreen(),
   ));
 }

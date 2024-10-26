@@ -1,5 +1,8 @@
 import 'package:e_commerce_app_project/components/CustomeTextFormField.dart';
 import 'package:e_commerce_app_project/components/little_components.dart';
+import 'package:e_commerce_app_project/page/home.dart';
+import 'package:e_commerce_app_project/page/main_cover_screen.dart';
+import 'package:e_commerce_app_project/page/user/personal_information.dart';
 import 'package:e_commerce_app_project/page/user/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -172,6 +175,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     style: buttonCustome,
                     onPressed: () {
                       //Where you have to make Sign In to Home Page with real Data
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (page) => MainCoverScreen()));
                     },
                     child: Text(
                       "Sign in",

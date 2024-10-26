@@ -22,9 +22,11 @@ class Product {
   final Category category;
   final Size size;
   final double price;
+  final String style;
   final String imageURL;
   final bool isLike;
   final String description;
+  final DateTime dateTimeCreate = DateTime.now();
 
   Product(
       {required this.name,
@@ -33,6 +35,7 @@ class Product {
       required this.size,
       required this.imageURL,
       required this.isLike,
+      required this.style,
       required this.description})
       : id = uuid.v4();
 }
