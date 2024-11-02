@@ -10,6 +10,7 @@ class CardProduct extends StatelessWidget {
     required this.product,
     required this.size, // Thay đổi thành một tham số duy nhất cho kích thước
     required this.islike,
+    this.haveImage,
   });
 
   final double
@@ -17,12 +18,14 @@ class CardProduct extends StatelessWidget {
   final String? id;
   final Product product;
   final bool islike;
+  final bool? haveImage;
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
     return Container(
       // Không sử dụng Card, bỏ nền và shadow
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.brown.withOpacity(0.3)),
@@ -31,6 +34,7 @@ class CardProduct extends StatelessWidget {
         onTap: () {},
         child: Column(
           mainAxisSize: MainAxisSize.min,
+
           crossAxisAlignment: CrossAxisAlignment.center, // Căn trái
           children: [
             Stack(
@@ -52,7 +56,8 @@ class CardProduct extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                          color: Colors.yellow, shape: BoxShape.circle),
+                          color: Colors.grey.withOpacity(0.5),
+                          shape: BoxShape.circle),
                       child: Icon(
                         islike
                             ? FontAwesomeIcons.solidHeart
@@ -70,14 +75,15 @@ class CardProduct extends StatelessWidget {
               height: 8,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // Căn trái
+                //crossAxisAlignment: CrossAxisAlignment.start, // Căn trái
                 children: [
                   Text(
                     product.name,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.035,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -85,8 +91,9 @@ class CardProduct extends StatelessWidget {
                   Text(
                     NumberFormat('#,##0', 'vi_VN').format(product.price) +
                         ' VND',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: screenWidth * 0.03,
                       color: Colors.grey[700],
                     ),
                   ),

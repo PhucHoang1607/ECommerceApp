@@ -1,8 +1,9 @@
 import 'package:e_commerce_app_project/components/CustomeItemNavigation.dart';
 import 'package:e_commerce_app_project/page/cart/main_card_screen.dart';
 import 'package:e_commerce_app_project/page/home.dart';
+import 'package:e_commerce_app_project/page/product/main_product_screen.dart';
 import 'package:e_commerce_app_project/page/review_screen.dart';
-import 'package:e_commerce_app_project/page/user/user_info_screen.dart';
+import 'package:e_commerce_app_project/page/user/user_screen.dart';
 import 'package:e_commerce_app_project/page/wishlist/wish_list_screen.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,10 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
 
   final List<Widget> _page = [
     HomeScreen(),
-    MainCartScreen(),
+    MainProductScreen(),
     WishListMainScreen(),
-    ReviewScreen(),
-    UserInfoScreen(),
+    MainCartScreen(),
+    UserScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -43,6 +44,9 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
     var isDark = MediaQuery.of(context).platformBrightness;
+    var fontSizeHeader = screenWidth * 0.06;
+    var fontSizeNormal = screenWidth * 0.04;
+
     return SafeArea(
       child: Scaffold(
         extendBody: true,
@@ -88,7 +92,7 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
                               color: _selectedIndex == 1
                                   ? Colors.white
                                   : Colors.transparent,
-                              child: Icon(Icons.shopping_cart,
+                              child: Icon(Icons.shopping_bag,
                                   size: screenWidth * 0.06,
                                   color: _selectedIndex == 1
                                       ? isDark != Brightness.dark
@@ -120,7 +124,7 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
                               color: _selectedIndex == 3
                                   ? Colors.white
                                   : Colors.transparent,
-                              child: Icon(Icons.reviews,
+                              child: Icon(Icons.payment,
                                   size: screenWidth * 0.06,
                                   color: _selectedIndex == 3
                                       ? isDark != Brightness.dark
