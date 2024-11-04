@@ -1,4 +1,4 @@
-import 'package:e_commerce_app_project/utilities/change_theme.dart';
+import 'package:e_commerce_app_project/core/extension/change_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

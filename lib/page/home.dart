@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app_project/components/CardProduct.dart';
-import 'package:e_commerce_app_project/model/Category.dart';
+import 'package:e_commerce_app_project/model/category.dart';
 import 'package:e_commerce_app_project/model/Product.dart';
 import 'package:e_commerce_app_project/model/dummy_data/category_data.dart';
 import 'package:e_commerce_app_project/model/dummy_data/product_data.dart';
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
       child: Column(
         children: [
           Row(
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: MaterialStateProperty.all<Color>(
                         Colors.grey.withOpacity(0.5)),
                     shape: MaterialStateProperty.all<CircleBorder>(
-                      CircleBorder(),
+                      const CircleBorder(),
                     ),
                   ),
                   color: isDark != Brightness.dark
@@ -197,9 +197,10 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 5,
           ),
           Container(
-            width: screenWidth * 0.2,
+            width: screenWidth * 0.25,
             child: Center(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(lstImagecarousel.length, (index) {
                   return AnimatedContainer(
                     duration:
@@ -319,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           id: product.id,
                           product: product,
                           size: screenWidth * 0.3,
-                          islike: product.isLike);
+                          islike: false);
                     }),
               ),
             ],

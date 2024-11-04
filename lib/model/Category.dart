@@ -10,18 +10,29 @@ class Category {
   final String id;
   final String name;
   final String? imgUrl;
+  final bool? markedForDeletion;
 
-  Category({required this.name, this.imgUrl}) : id = uuid.v4();
+  Category({
+    required this.id,
+    required this.name,
+    this.imgUrl,
+    this.markedForDeletion = false,
+  });
+
+  factory Category.fromJson(Map<String, dynamic> json) {
+    return Category(
+      id: json['_id'],
+      name: json['name'],
+      imgUrl: json['imgUrl'],
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': id,
       'name': name,
       'imgUrl': imgUrl,
+      'markedForDeletion': markedForDeletion
     };
-  }
-
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(name: json['name'], imgUrl: json['imgUrl']);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:e_commerce_app_project/components/CardProduct.dart';
-import 'package:e_commerce_app_project/model/Category.dart';
+import 'package:e_commerce_app_project/model/category.dart';
 import 'package:e_commerce_app_project/model/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:e_commerce_app_project/model/dummy_data/category_data.dart';
@@ -188,7 +188,7 @@ class _MainProductScreenState extends State<MainProductScreen> {
                             id: product.id,
                             product: product,
                             size: screenWidth * 0.3,
-                            islike: product.isLike);
+                            islike: false);
                       }),
                 ),
               ],

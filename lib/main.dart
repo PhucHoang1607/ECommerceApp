@@ -1,9 +1,10 @@
+import 'package:e_commerce_app_project/core/services/router.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/main_cover_screen.dart';
 import 'package:e_commerce_app_project/page/started/splashed_screen.dart';
 import 'package:e_commerce_app_project/page/user/personal_information.dart';
 import 'package:e_commerce_app_project/page/user/sign_in.dart';
-import 'package:e_commerce_app_project/utilities/change_theme.dart';
+import 'package:e_commerce_app_project/core/extension/change_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ var kDarkColorScheme = ColorScheme.fromSeed(
 void main() {
   runApp(ChangeNotifierProvider(
     create: (_) => ThemeUltilities(),
-    child: MainApp(),
+    child: const MainApp(),
   ));
 }
 
@@ -30,6 +31,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeMode = Provider.of<ThemeUltilities>(context);
     return MaterialApp(
+      //routerConfig: router,
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark().copyWith(
         useMaterial3: true,
@@ -57,7 +59,7 @@ class MainApp extends StatelessWidget {
         appBarTheme: const AppBarTheme().copyWith(
             backgroundColor: kColorScheme.onPrimaryContainer,
             foregroundColor: kColorScheme.primaryContainer),
-        cardTheme: CardTheme().copyWith(
+        cardTheme: const CardTheme().copyWith(
           color: kColorScheme.secondaryContainer,
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
@@ -78,7 +80,7 @@ class MainApp extends StatelessWidget {
             ),
       ),
       themeMode: themeMode.themeMode,
-      home: MainCoverScreen(),
+      home: SplashedScreen(),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:e_commerce_app_project/model/Category.dart';
+import 'package:e_commerce_app_project/model/category.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -16,56 +16,87 @@ enum Size {
   tripleExtraLarge
 }
 
+enum GenderAgeCategory {
+  men,
+  women,
+  kids,
+  modern,
+  arrive,
+}
+
 class Product {
   final String id;
   final String name;
-  final Category category;
-  final Size size;
-  final double price;
-  final String style;
-  final String imageURL;
-  final bool isLike;
   final String description;
-  final DateTime dateTimeCreate = DateTime.now();
+  final double price;
+  final List<String>? color;
+  final String image;
+  final List<String>? imageDetail;
+  final List<String>? sizes;
+  final String category;
+  final GenderAgeCategory? genderAgecategory;
 
-  Product(
-      {required this.name,
-      required this.price,
-      required this.category,
-      required this.size,
-      required this.imageURL,
-      required this.isLike,
-      required this.style,
-      required this.description})
-      : id = uuid.v4();
+  final DateTime dateAdded;
+  final double countInStock;
+
+  Product({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.price,
+    this.color,
+    required this.image,
+    this.imageDetail,
+    this.sizes,
+    required this.category,
+    this.genderAgecategory,
+    required this.dateAdded,
+    this.countInStock = 1,
+  });
+
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      id: json['_id'] as String,
+      name: json['name'] as String,
+      description: json['description'] as String,
+      price: (json['price'] as num).toDouble(),
+      color: List<String>.from(json['color']),
+      image: json['image'] as String,
+      imageDetail: List<String>.from(json['imageDetail']),
+      sizes: List<String>.from(json['sizes']),
+      category: json['category'] as String,
+      genderAgecategory:
+          _stringToGenderAgeCategory(json['genderAgecategory'] as String),
+      dateAdded: DateTime.parse(json['dateAdded']),
+      countInStock: json['countInStock'] as double,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      '_id': id,
+      'name': name,
+      'description': description,
+      'price': price,
+      'color': color,
+      'image': image,
+      'imageDetail': imageDetail,
+      'sizes': sizes,
+      'category': category,
+      'genderAgecategory': _genderAgeCategoryToString(genderAgecategory!),
+      'dateAdded': dateAdded.toIso8601String(),
+      'countInStock': countInStock,
+    };
+  }
+
+  // Helper method to convert string to enum
+  static GenderAgeCategory _stringToGenderAgeCategory(String value) {
+    return GenderAgeCategory.values
+        .firstWhere((e) => e.toString().split('.').last == value);
+  }
+
+  // Helper method to convert enum to string
+  static String _genderAgeCategoryToString(GenderAgeCategory category) {
+    return category.toString().split('.').last;
+  }
 }
-
-var ampersendSize = {
-  Size.small: "S",
-  Size.medium: "M",
-  Size.large: "L",
-  Size.extraLarge: "XL",
-  Size.doubleExtraLarge: "XXL",
-  Size.tripleExtraLarge: "XXXL",
-};
-
-// var categoryIcon = {
-//   Category.tshirt: {
-//     Image.asset("asset/icon/shirt.png"),
-//   },
-//   Category.trousers: {
-//     Image.asset("asset/icon/jeans.png"),
-//   },
-//   Category.dress: {
-//     Image.asset("asset/icon/dress.png"),
-//   },
-//   Category.jacket: {
-//     Image.asset("asset/icon/jacket.png"),
-//   },
-//   Category.accessory: {
-//     Image.asset("asset/icon/sunglasses.png"),
-//   },
-//   Category.vest: {
-//     Image.asset("asset/icon/suit.png"),
-//   }
-// };

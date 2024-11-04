@@ -43,8 +43,11 @@ class CardProduct extends StatelessWidget {
                   width: size,
                   height:
                       size, // Đảm bảo chiều rộng và chiều cao bằng nhau để tạo hình vuông
-                  child: Image.network(
-                    product.imageURL,
+                  child: //product.image != null
+                      // ? const Icon(Icons.image)
+                      // :
+                      Image.network(
+                    product.image,
                     fit: BoxFit.cover,
                   ),
                 ),
