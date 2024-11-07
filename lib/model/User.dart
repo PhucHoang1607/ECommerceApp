@@ -36,15 +36,18 @@ class User {
       id: json['_id'],
       name: json['name'],
       email: json['email'],
-      passwordHash: json['passwordHash'],
+      passwordHash: json['passwordHash'] ?? '',
       paymentCustomerId: json['paymentCustomerId'] ?? '',
       address: json['address'] ?? '',
       gender: json['gender'] ?? '',
-      dateOfBirth: json['dateOfBirth'] ?? '',
+      dateOfBirth: json['dateOfBirth'] ?? DateTime.now(),
       phone: json['phone'],
       isAdmin: json['isAdmin'] ?? false,
-      resetPasswordOTP: json['resetPasswordOTP'] ?? '',
-      resetPasswordOTPExpires: json['resetPasswordOTPExpires'] ?? '',
+      resetPasswordOTP: json['resetPasswordOTP'],
+      resetPasswordOTPExpires: json['resetPasswordOTPExpires'] != null
+          ? DateTime.parse(json['resetPasswordOTPExpires'])
+          : DateTime(
+              DateTime.now().year, DateTime.now().month, DateTime.now().day),
       cart: json['cart'] ?? [],
       wishlists: List<Map<String, dynamic>>.from(json['wishlists'] ?? []),
     );

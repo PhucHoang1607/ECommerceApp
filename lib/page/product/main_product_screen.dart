@@ -145,7 +145,7 @@ class _MainProductScreenState extends State<MainProductScreen> {
                               color: Colors.brown.withOpacity(0.4),
                               shape: BoxShape.circle),
                           child: Image.asset(
-                            category.imgUrl!,
+                            category.image,
                             width: screenWidth * 0.1,
                             height: screenHeight * 0.03,
                           ),

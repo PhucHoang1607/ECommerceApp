@@ -1,12 +1,10 @@
-import 'package:e_commerce_app_project/core/services/router.dart';
-import 'package:e_commerce_app_project/page/home.dart';
-import 'package:e_commerce_app_project/page/main_cover_screen.dart';
-import 'package:e_commerce_app_project/page/started/splashed_screen.dart';
-import 'package:e_commerce_app_project/page/user/personal_information.dart';
-import 'package:e_commerce_app_project/page/user/sign_in.dart';
+import 'package:e_commerce_app_project/admin/adPage/adMain.dart';
 import 'package:e_commerce_app_project/core/extension/change_theme.dart';
+import 'package:e_commerce_app_project/page/started/splashed_screen.dart';
+import 'package:e_commerce_app_project/page/user/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 141, 108, 97),
@@ -17,7 +15,8 @@ var kDarkColorScheme = ColorScheme.fromSeed(
     //  Color.fromARGB(255, 6, 79, 100),
     );
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: '.env');
   runApp(ChangeNotifierProvider(
     create: (_) => ThemeUltilities(),
     child: const MainApp(),
@@ -80,7 +79,7 @@ class MainApp extends StatelessWidget {
             ),
       ),
       themeMode: themeMode.themeMode,
-      home: SplashedScreen(),
+      home: SignInScreen(),
     );
   }
 }

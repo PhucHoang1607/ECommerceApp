@@ -9,13 +9,13 @@ const uuid = Uuid();
 class Category {
   final String id;
   final String name;
-  final String? imgUrl;
+  final String image;
   final bool? markedForDeletion;
 
   Category({
     required this.id,
     required this.name,
-    this.imgUrl,
+    required this.image,
     this.markedForDeletion = false,
   });
 
@@ -23,7 +23,7 @@ class Category {
     return Category(
       id: json['_id'],
       name: json['name'],
-      imgUrl: json['imgUrl'],
+      image: json['image'],
     );
   }
 
@@ -31,7 +31,7 @@ class Category {
     return {
       '_id': id,
       'name': name,
-      'imgUrl': imgUrl,
+      'image': image,
       'markedForDeletion': markedForDeletion
     };
   }

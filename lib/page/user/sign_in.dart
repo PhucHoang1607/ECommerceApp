@@ -1,9 +1,12 @@
+import 'package:e_commerce_app_project/admin/adPage/adMain.dart';
 import 'package:e_commerce_app_project/components/CustomeTextFormField.dart';
 import 'package:e_commerce_app_project/components/little_components.dart';
+import 'package:e_commerce_app_project/model/token.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/main_cover_screen.dart';
-import 'package:e_commerce_app_project/page/user/personal_information.dart';
+
 import 'package:e_commerce_app_project/page/user/sign_up.dart';
+import 'package:e_commerce_app_project/services/global/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +23,27 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController _passwordController = TextEditingController();
 
   bool _isObscure = true;
+
+  Future<void> handleLogin() async {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    final auth = await loginUser(email, password);
+
+    if (auth != null) {
+      if (auth.isAdmin == true) {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (page) => AdminMainPage()));
+      } else {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (page) => MainCoverScreen()));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login failed. Please try again.")),
+      );
+    }
+  }
 
   @override
   void dispose() {
@@ -173,11 +197,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: screenHeight * 0.06,
                   child: ElevatedButton(
                     style: buttonCustome,
-                    onPressed: () {
-                      //Where you have to make Sign In to Home Page with real Data
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (page) => MainCoverScreen()));
-                    },
+                    onPressed: handleLogin,
                     child: Text(
                       "Sign in",
                       style: TextStyle(fontSize: screenWidth * 0.04),

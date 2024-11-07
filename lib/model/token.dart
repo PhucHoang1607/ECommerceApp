@@ -18,7 +18,7 @@ class Token {
       id: json['_id'],
       userId: json['userId'],
       refreshToken: json['refreshToken'],
-      accessToken: json['accessToken'],
+      accessToken: json['accessToken'] ?? null,
       createdAt: json['createdAt'],
     );
   }

@@ -37,7 +37,7 @@ class Product {
   final GenderAgeCategory? genderAgecategory;
 
   final DateTime dateAdded;
-  final double countInStock;
+  final int countInStock;
 
   Product({
     required this.id,
@@ -51,7 +51,7 @@ class Product {
     required this.category,
     this.genderAgecategory,
     required this.dateAdded,
-    this.countInStock = 1,
+    required this.countInStock,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -68,7 +68,7 @@ class Product {
       genderAgecategory:
           _stringToGenderAgeCategory(json['genderAgecategory'] as String),
       dateAdded: DateTime.parse(json['dateAdded']),
-      countInStock: json['countInStock'] as double,
+      countInStock: json['countInStock'] ?? 1,
     );
   }
 
