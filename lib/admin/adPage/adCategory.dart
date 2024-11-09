@@ -1,4 +1,6 @@
 import 'package:e_commerce_app_project/admin/adComponents/cardAdCategory.dart';
+import 'package:e_commerce_app_project/admin/adPage/add/addCategory.dart';
+import 'package:e_commerce_app_project/admin/adPage/detail/detailCategory.dart';
 import 'package:e_commerce_app_project/services/admin/categoryF.dart';
 import 'package:e_commerce_app_project/services/global/auth.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +24,19 @@ class _AdminCategoryPageState extends State<AdminCategoryPage> {
   }
 
   Future<void> _fectCategories() async {
-    final token = await getAccessToken();
-    final getCateF = await getListCategory(token.toString());
+    final getCateF = await getListCategory();
     setState(() {
       _categories = getCateF;
       _isLoading = false;
     });
+  }
+
+  _openAddCategoryOverlay() {
+    showModalBottomSheet(
+        useSafeArea: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => AddCategoryPage());
   }
 
   @override
@@ -54,6 +63,11 @@ class _AdminCategoryPageState extends State<AdminCategoryPage> {
                   },
                   itemCount: _categories.length,
                 ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _openAddCategoryOverlay,
+          foregroundColor: Colors.green,
+          child: const Icon(Icons.add),
         ),
       ),
     );

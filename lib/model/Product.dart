@@ -28,15 +28,14 @@ class Product {
   final String id;
   final String name;
   final String description;
-  final double price;
+  final int price;
   final List<String>? color;
   final String image;
   final List<String>? imageDetail;
   final List<String>? sizes;
   final String category;
   final GenderAgeCategory? genderAgecategory;
-
-  final DateTime dateAdded;
+  final DateTime? dateAdded;
   final int countInStock;
 
   Product({
@@ -56,18 +55,23 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['_id'] as String,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      price: (json['price'] as num).toDouble(),
-      color: List<String>.from(json['color']),
-      image: json['image'] as String,
-      imageDetail: List<String>.from(json['imageDetail']),
-      sizes: List<String>.from(json['sizes']),
-      category: json['category'] as String,
+      id: json['_id'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      price: json['price'] ?? 0,
+      color: List<String>.from(json['color'] ?? []),
+      image: json['image'] ?? '',
+      imageDetail: List<String>.from(json['imageDetail'] ?? []),
+      sizes: List<String>.from(json['sizes'] ?? []),
+      category: json['category'] ?? '',
+
+      // category: json['category'],
       genderAgecategory:
-          _stringToGenderAgeCategory(json['genderAgecategory'] as String),
-      dateAdded: DateTime.parse(json['dateAdded']),
+          _stringToGenderAgeCategory(json['genderAgecategory'] ?? 'men'),
+      dateAdded: json['dateAdded'] != null && json['dateAdded'] is String
+          ? DateTime.tryParse(json['dateAdded']) ??
+              DateTime.now() // Nếu không thể chuyển đổi, dùng ngày hiện tại
+          : null,
       countInStock: json['countInStock'] ?? 1,
     );
   }
@@ -84,7 +88,7 @@ class Product {
       'sizes': sizes,
       'category': category,
       'genderAgecategory': _genderAgeCategoryToString(genderAgecategory!),
-      'dateAdded': dateAdded.toIso8601String(),
+      'dateAdded': dateAdded,
       'countInStock': countInStock,
     };
   }

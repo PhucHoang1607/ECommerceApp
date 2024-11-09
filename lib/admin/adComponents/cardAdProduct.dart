@@ -8,28 +8,31 @@ class CardProductAd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      decoration:
-          BoxDecoration(color: const Color.fromARGB(255, 184, 144, 249)),
-      child: Row(
-        children: [
-          Image.network(
-            product.image,
-            width: 80,
-            height: 80,
-            errorBuilder: (context, error, stackTrace) =>
-                const Icon(Icons.image),
-          ),
-          const SizedBox(
-            width: 30,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text(product.name), Text(product.price.toString())],
-          )
-        ],
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        decoration:
+            BoxDecoration(color: const Color.fromARGB(255, 184, 144, 249)),
+        child: Row(
+          children: [
+            Image.network(
+              product.image,
+              width: 80,
+              height: 80,
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.image),
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(product.name), Text(product.price.toString())],
+            )
+          ],
+        ),
       ),
     );
   }

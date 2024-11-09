@@ -41,7 +41,7 @@ class User {
       address: json['address'] ?? '',
       gender: json['gender'] ?? '',
       dateOfBirth: json['dateOfBirth'] ?? DateTime.now(),
-      phone: json['phone'],
+      phone: json['phone'] ?? '',
       isAdmin: json['isAdmin'] ?? false,
       resetPasswordOTP: json['resetPasswordOTP'],
       resetPasswordOTPExpires: json['resetPasswordOTPExpires'] != null

@@ -23,8 +23,7 @@ class _AdminProductPageState extends State<AdminProductPage> {
   }
 
   Future<void> _fetchProducts() async {
-    final token = await getAccessToken();
-    final getProductF = await getProductList(token.toString());
+    final getProductF = await getProductList(page: 1, pageSize: 20);
 
     setState(() {
       _products = getProductF;
@@ -57,6 +56,11 @@ class _AdminProductPageState extends State<AdminProductPage> {
               ),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          foregroundColor: Colors.green,
+          child: const Icon(Icons.add),
         ),
       ),
     );
