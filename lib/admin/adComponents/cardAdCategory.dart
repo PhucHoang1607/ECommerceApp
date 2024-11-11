@@ -1,4 +1,5 @@
 import 'package:e_commerce_app_project/admin/adPage/detail/detailCategory.dart';
+import 'package:e_commerce_app_project/admin/adPage/edit/editCategory.dart';
 import 'package:e_commerce_app_project/model/category.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,36 @@ class _CardCategoryAdState extends State<CardCategoryAd> {
         useSafeArea: true,
         isScrollControlled: true,
         context: context,
-        builder: (ctx) => DetailCategoryAdP(
-              id: widget.category.id!,
-              category: widget.category,
+        builder: (ctx) => Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 1, 32, 57),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30))),
+              child: DetailCategoryAdP(
+                id: widget.category.id!,
+                category: widget.category,
+              ),
+            ));
+  }
+
+  _openEditCategoryOverlay() {
+    showModalBottomSheet(
+        useSafeArea: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30))),
+              child: EditCategoryAdP(
+                id: widget.category.id!,
+                category: widget.category,
+              ),
             ));
   }
 
@@ -27,6 +55,7 @@ class _CardCategoryAdState extends State<CardCategoryAd> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _openDetailCategoryOverlay,
+      onLongPress: _openEditCategoryOverlay,
       child: Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

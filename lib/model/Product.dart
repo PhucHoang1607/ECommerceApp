@@ -16,13 +16,7 @@ enum Size {
   tripleExtraLarge
 }
 
-enum GenderAgeCategory {
-  men,
-  women,
-  kids,
-  modern,
-  arrive,
-}
+enum GenderAgeCategory { men, women, kids, modern, arrive, bussiness }
 
 class Product {
   final String id;
@@ -33,7 +27,7 @@ class Product {
   final String image;
   final List<String>? imageDetail;
   final List<String>? sizes;
-  final String category;
+  final Category? category;
   final GenderAgeCategory? genderAgecategory;
   final DateTime? dateAdded;
   final int countInStock;
@@ -47,7 +41,7 @@ class Product {
     required this.image,
     this.imageDetail,
     this.sizes,
-    required this.category,
+    this.category,
     this.genderAgecategory,
     required this.dateAdded,
     required this.countInStock,
@@ -63,7 +57,10 @@ class Product {
       image: json['image'] ?? '',
       imageDetail: List<String>.from(json['imageDetail'] ?? []),
       sizes: List<String>.from(json['sizes'] ?? []),
-      category: json['category'] ?? '',
+      //category: Category.fromJson(json['category'] ?? {}),
+      category: json['category'] is Map<String, dynamic>
+          ? Category.fromJson(json['category'])
+          : null, // Set to null if it's just an ID string
 
       // category: json['category'],
       genderAgecategory:
@@ -95,8 +92,14 @@ class Product {
 
   // Helper method to convert string to enum
   static GenderAgeCategory _stringToGenderAgeCategory(String value) {
-    return GenderAgeCategory.values
-        .firstWhere((e) => e.toString().split('.').last == value);
+    return GenderAgeCategory.values.firstWhere(
+      (e) => e.toString().split('.').last == value,
+      orElse: () {
+        // Log or handle the error as needed
+        throw Exception(
+            "No matching GenderAgeCategory found for value: $value");
+      },
+    );
   }
 
   // Helper method to convert enum to string

@@ -123,3 +123,57 @@ Future<void> addCategory({
     print('Error fetching categories: $e');
   }
 }
+
+Future<Category?> editCategory(
+    String categoryId, String name, String image) async {
+  final url = Uri.parse(Config.categoryEditAdUrl(categoryId));
+  final token = await getAccessToken();
+  print(token);
+  try {
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({'name': name, 'image': image}),
+    );
+
+    if (response.statusCode == 200) {
+      return Category.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 404) {
+      throw Exception('Category not found');
+    }
+    // else {
+    //   throw Exception('Failed to edit category');
+    // }
+  } catch (e) {
+    print(e);
+    return null;
+  }
+}
+
+Future<void> deleteCategory(String categoryId) async {
+  final url = Uri.parse(Config.categoryDeleteAdUrl(categoryId));
+  final token = await getAccessToken();
+  try {
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 404) {
+      throw Exception('Category not found');
+    } else if (response.statusCode != 204) {
+      throw Exception('Failed to delete category');
+    } else {
+      print('Delete successfully');
+    }
+  } catch (e) {
+    print(e);
+    throw Exception('Error deleting category: $e');
+  }
+}

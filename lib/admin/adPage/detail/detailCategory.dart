@@ -1,4 +1,5 @@
 import 'package:e_commerce_app_project/model/category.dart';
+import 'package:e_commerce_app_project/services/admin/categoryF.dart';
 import 'package:flutter/material.dart';
 
 class DetailCategoryAdP extends StatefulWidget {
@@ -13,6 +14,17 @@ class DetailCategoryAdP extends StatefulWidget {
 }
 
 class _DetailCategoryAdPState extends State<DetailCategoryAdP> {
+  Future<void> deleteCateF() async {
+    try {
+      await deleteCategory(widget.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Category marked for deletion')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete category: $e')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -48,7 +60,11 @@ class _DetailCategoryAdPState extends State<DetailCategoryAdP> {
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(width: 1, color: Colors.blueAccent)),
-                  child: Image.network(widget.category.image),
+                  child: Image.network(
+                    widget.category.image,
+                    errorBuilder: (context, error, stackTrace) =>
+                        Icon(Icons.image_not_supported),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -72,7 +88,7 @@ class _DetailCategoryAdPState extends State<DetailCategoryAdP> {
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(
                             Color.fromARGB(255, 255, 0, 13))),
-                    onPressed: () {},
+                    onPressed: deleteCateF,
                     child: Text('Delete this category'))
               ],
             ),

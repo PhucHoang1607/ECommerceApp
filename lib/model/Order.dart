@@ -200,7 +200,7 @@ enum StatusHistory {
 
 class Order {
   final String id;
-  final List<String> orderItems; // Sửa thành List<OrderItem>
+  final List<OrderItems> orderItems; // Sửa thành List<OrderItem>
   final String shippingAdress;
   final String phone;
   final String country;
@@ -324,14 +324,17 @@ class Order {
     return Order(
       id: json['_id'],
       //orderItems: List<String>.from(json['orderItems'] ?? []),
-      orderItems: (json['orderItems'] as List<dynamic>?)
-              ?.map((item) => item is String
-                  ? item
-                  : (item['_id'] ?? '')
-                      .toString()) // Ensure each item is a String
-              .where((id) => id.isNotEmpty) // Filter out empty IDs
-              .toList() ??
-          [],
+      // orderItems: (json['orderItems'] as List<dynamic>?)
+      //         ?.map((item) => item is String
+      //             ? item
+      //             : (item['_id'] ?? '')
+      //                 .toString()) // Ensure each item is a String
+      //         .where((id) => id.isNotEmpty) // Filter out empty IDs
+      //         .toList() ??
+      //     [],
+      orderItems: (json['orderItems'] as List<dynamic>)
+          .map((item) => OrderItems.fromJson(item))
+          .toList(),
       shippingAdress: json['shippingAdress'],
       phone: json['phone'],
       country: json['country'],

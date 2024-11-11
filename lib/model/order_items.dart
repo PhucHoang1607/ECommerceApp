@@ -2,7 +2,7 @@ import 'package:e_commerce_app_project/model/product.dart';
 
 class OrderItems {
   final String id;
-  final String product; // Tham chieu san pham
+  final Product product; // Tham chieu san pham
   final String productName;
   final String productImage;
   final int productPrice;
@@ -23,8 +23,9 @@ class OrderItems {
 
   factory OrderItems.fromJson(Map<String, dynamic> json) {
     return OrderItems(
-      id: json['_id'],
-      product: json['product'] ?? '',
+      id: json['_id'] ?? '',
+      //product: json['product'] ?? '',
+      product: Product.fromJson(json['product'] ?? {}),
       productName: json['productName'] ?? '',
       productImage: json['productImage'] ?? "",
       productPrice: json['productPrice'],

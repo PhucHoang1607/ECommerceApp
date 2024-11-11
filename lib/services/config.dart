@@ -52,20 +52,17 @@ class Config {
   //==> User
   static String get userGetAdUrl => '$adminPath/user';
   static String get userCountAdUrl => '$adminPath/users/count';
-  static String userIdGetAdUrl(String id) => '$adminPath/user/$id';
   static String userDeleteAdUrl(String id) => '$adminPath/user/$id';
 
   //==> Categories
   static String get categoryGetAdUrl => '$adminPath/categories';
   static String get categoryAddAdUrl => '$adminPath/categories';
-  static String categoryIdGetAdUrl(String id) => '$adminPath/categories/$id';
   static String categoryEditAdUrl(String id) => '$adminPath/categories/$id';
   static String categoryDeleteAdUrl(String id) => '$adminPath/categories/$id';
 
   //==> Products
   static String get productGetAdUrl => '$adminPath/products';
   static String get productCountGetAdUrl => '$adminPath/products/count';
-  static String productIdGetAdUrl(String id) => '$adminPath/products/$id';
   static String get productAddAdUrl => '$adminPath/products';
   static String productEditAdUrl(String id) => '$adminPath/products/$id';
   static String productImageDeleteAdUrl(String id) =>

@@ -1,3 +1,4 @@
+import 'package:e_commerce_app_project/admin/adPage/detail/detailOrder.dart';
 import 'package:e_commerce_app_project/model/order.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,10 @@ class CardOrderAd extends StatelessWidget {
     var fontSizeHeader = screenWidth * 0.06;
     var fontSizeNormal = screenWidth * 0.04;
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (page) => DetailOrderAdP(id: order.id, order: order)));
+      },
       child: Container(
         //color: Colors.grey.shade100,
         padding: EdgeInsets.all(screenWidth * 0.03),

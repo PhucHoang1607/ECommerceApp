@@ -1,3 +1,5 @@
+import 'package:e_commerce_app_project/model/wish_list_item.dart';
+
 class User {
   final String id;
   final String name;
@@ -12,7 +14,8 @@ class User {
   final double? resetPasswordOTP;
   final DateTime? resetPasswordOTPExpires;
   final List<dynamic>? cart;
-  final List<Map<String, dynamic>>? wishlists;
+  //final List<Map<String, dynamic>>? wishlists;
+  final List<WishListItems>? wishlists;
 
   User({
     required this.id,
@@ -28,7 +31,7 @@ class User {
     this.resetPasswordOTP,
     this.resetPasswordOTPExpires,
     this.cart = const [],
-    this.wishlists = const [],
+    this.wishlists,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -49,7 +52,11 @@ class User {
           : DateTime(
               DateTime.now().year, DateTime.now().month, DateTime.now().day),
       cart: json['cart'] ?? [],
-      wishlists: List<Map<String, dynamic>>.from(json['wishlists'] ?? []),
+      //wishlists: List<Map<String, dynamic>>.from(json['wishlists'] ?? []),
+      wishlists: json['wishlists'] != null
+          ? List<WishListItems>.from(
+              json['wishlists'].map((x) => WishListItems.fromJson(x)))
+          : [],
     );
   }
 

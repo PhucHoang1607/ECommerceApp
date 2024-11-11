@@ -18,10 +18,12 @@ Future<List<User>> getListUser() async {
     );
 
     if (response.statusCode != 200) {
-      print('Failed to fetch categories: ${response.statusCode}');
+      print(
+          'Failed to fetch categories: ${response.statusCode} - ${response.body}');
       return [];
     } else {
       final List<dynamic> users = jsonDecode(response.body);
+
       return users.map((json) => User.fromJson(json)).toList();
     }
   } catch (e) {
