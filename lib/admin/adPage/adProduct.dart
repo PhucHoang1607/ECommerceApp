@@ -1,4 +1,5 @@
 import 'package:e_commerce_app_project/admin/adComponents/cardAdProduct.dart';
+import 'package:e_commerce_app_project/admin/adPage/add/addProduct.dart';
 import 'package:e_commerce_app_project/model/product.dart';
 import 'package:e_commerce_app_project/services/admin/productF.dart';
 import 'package:e_commerce_app_project/services/global/auth.dart';
@@ -58,7 +59,10 @@ class _AdminProductPageState extends State<AdminProductPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (page) => const addProductAdP()));
+          },
           foregroundColor: Colors.green,
           child: const Icon(Icons.add),
         ),

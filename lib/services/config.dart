@@ -34,7 +34,7 @@ class Config {
   static String get adminPath => '$apiUrl/admin';
   static String get adminFPath => '$apiFucntionUrl/admin';
 
-  //user
+  //USER
   static String get userPath => '$apiUrl/users';
   static String get categoriesPath => '$apiUrl/categories';
 
@@ -46,7 +46,9 @@ class Config {
   static String get verifyPasswordResetOTPUrl => '$apiUrl/verify-otp';
   static String get resetPasswordUrl => '$apiUrl/reset-password';
 
-  //Admin function
+  //User function
+  static String getUserById(String id) => '$userPath/$id';
+  static String updateUserUrl(String id) => '$userPath/$id';
 
   //ADMIN
   //==> User

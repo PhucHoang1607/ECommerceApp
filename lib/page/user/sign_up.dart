@@ -2,6 +2,7 @@ import 'package:e_commerce_app_project/components/CustomeTextFormField.dart';
 import 'package:e_commerce_app_project/components/little_components.dart';
 import 'package:e_commerce_app_project/page/user/personal_information.dart';
 import 'package:e_commerce_app_project/page/user/sign_in.dart';
+import 'package:e_commerce_app_project/services/global/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,6 +21,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool? isChecked = false;
 
   bool _isObscure = true;
+
+  void submitUserRegister() async {
+    final result = await registerUser(
+      name: 'Name User',
+      email: _emailController.text,
+      password: _passwordController.text,
+      phone: '00000000000',
+    );
+
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (page) => SignInScreen()));
+
+    // if (result.containsKey('error') ||
+    //     _comfirmPasswordController != _passwordController) {
+    //   print('Registration failed: ${result['error']}');
+    // } else {
+    //   print('Registration successful');
+    //   Navigator.of(context)
+    //       .push(MaterialPageRoute(builder: (page) => SignInScreen()));
+    // }
+  }
 
   @override
   void dispose() {
@@ -250,11 +272,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: screenHeight * 0.06,
                   child: ElevatedButton(
                     style: buttonCustome,
-                    onPressed: () {
-                      //Where you have to make Sign In to Home Page with real Data
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (page) => PersonalInformation()));
-                    },
+                    onPressed: submitUserRegister
+                    // () {
+                    //   //Where you have to make Sign In to Home Page with real Data
+                    //   Navigator.of(context).push(MaterialPageRoute(
+                    //       builder: (page) => PersonalInformation()));
+                    // }
+                    ,
                     child: Text(
                       "Sign Up",
                       style: TextStyle(fontSize: screenWidth * 0.04),

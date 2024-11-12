@@ -100,7 +100,7 @@ Future<void> addCategory({
       await http.MultipartFile.fromPath(
         'image',
         imageFile.path,
-        contentType: MediaType('image', 'jpeg'),
+        contentType: MediaType('image', 'png'),
       ),
     );
   }

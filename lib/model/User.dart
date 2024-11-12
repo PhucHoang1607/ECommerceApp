@@ -43,7 +43,8 @@ class User {
       paymentCustomerId: json['paymentCustomerId'] ?? '',
       address: json['address'] ?? '',
       gender: json['gender'] ?? '',
-      dateOfBirth: json['dateOfBirth'] ?? DateTime.now(),
+      dateOfBirth:
+          DateTime.tryParse(json['dateOfBirth'] ?? '') ?? DateTime.now(),
       phone: json['phone'] ?? '',
       isAdmin: json['isAdmin'] ?? false,
       resetPasswordOTP: json['resetPasswordOTP'],

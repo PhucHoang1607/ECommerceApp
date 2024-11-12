@@ -1,12 +1,29 @@
 import 'package:e_commerce_app_project/admin/adPage/detail/detailProduct.dart';
 import 'package:e_commerce_app_project/model/product.dart';
+import 'package:e_commerce_app_project/services/admin/productF.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class CardProductAd extends StatelessWidget {
+class CardProductAd extends StatefulWidget {
   const CardProductAd({super.key, required this.product});
 
   final Product product;
+
+  @override
+  State<CardProductAd> createState() => _CardProductAdState();
+}
+
+class _CardProductAdState extends State<CardProductAd> {
+  Future<void> deleteproductAdF() async {
+    try {
+      await deleteProduct(widget.product.id);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Delete successfully')));
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed To delete the product')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +35,8 @@ class CardProductAd extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (page) => DetailProductAdP(
-                  id: product.id,
-                  product: product,
+                  id: widget.product.id,
+                  product: widget.product,
                 )));
       },
       child: Container(
@@ -31,7 +48,7 @@ class CardProductAd extends StatelessWidget {
         child: Row(
           children: [
             Image.network(
-              product.image,
+              widget.product.image,
               width: screenWidth * 0.2,
               height: screenHeight * 0.09,
               errorBuilder: (context, error, stackTrace) =>
@@ -46,11 +63,11 @@ class CardProductAd extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.name,
+                    widget.product.name,
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                   ),
                   Text(
-                    "${NumberFormat("#,##0", "vi_VN").format(product.price)} VND",
+                    "${NumberFormat("#,##0", "vi_VN").format(widget.product.price)} VND",
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
                   )
                 ],
@@ -62,7 +79,7 @@ class CardProductAd extends StatelessWidget {
                 ElevatedButton(
                     style: ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.red)),
-                    onPressed: () {},
+                    onPressed: deleteproductAdF,
                     child: Icon(Icons.delete)),
               ],
             )

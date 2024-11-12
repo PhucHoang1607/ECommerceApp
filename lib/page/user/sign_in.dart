@@ -2,8 +2,11 @@ import 'package:e_commerce_app_project/admin/adPage/adMain.dart';
 import 'package:e_commerce_app_project/components/CustomeTextFormField.dart';
 import 'package:e_commerce_app_project/components/little_components.dart';
 import 'package:e_commerce_app_project/model/token.dart';
+import 'package:e_commerce_app_project/model/user.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/main_cover_screen.dart';
+import 'package:e_commerce_app_project/page/user/forget_password.dart';
+import 'package:e_commerce_app_project/page/user/personal_information.dart';
 
 import 'package:e_commerce_app_project/page/user/sign_up.dart';
 import 'package:e_commerce_app_project/services/global/auth.dart';
@@ -29,20 +32,40 @@ class _SignInScreenState extends State<SignInScreen> {
     final password = _passwordController.text;
 
     final auth = await loginUser(email, password);
+    print(auth?.id);
 
     if (auth != null) {
       if (auth.isAdmin == true) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (page) => AdminMainPage()));
       } else {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (page) => MainCoverScreen()));
+        if (isUserInfoComplete(auth)) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (page) => MainCoverScreen()));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (page) => PersonalInformation(
+                    userId: auth.id,
+                  )));
+        }
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login failed. Please try again.")),
       );
     }
+  }
+
+  bool isUserInfoComplete(User user) {
+    return user.name != null &&
+        user.name != "User Name" &&
+        user.address != null &&
+        user.address!.isNotEmpty &&
+        user.phone != null &&
+        user.phone != '0000000000' &&
+        user.gender != null &&
+        user.gender!.isNotEmpty &&
+        user.dateOfBirth != null;
   }
 
   @override
@@ -179,7 +202,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 Container(
                   padding: EdgeInsets.only(left: screenWidth * 0.4),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (page) => ForgotPasswordScreen()));
+                    },
                     child: Text(
                       "Forget Password ? ",
                       style: TextStyle(
