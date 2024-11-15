@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:e_commerce_app_project/model/user.dart';
 import 'package:e_commerce_app_project/services/config.dart';
 import 'package:e_commerce_app_project/services/global/auth.dart';
 import 'package:http/http.dart' as http;
@@ -41,5 +42,21 @@ Future<Map<String, dynamic>?> updateUser({
     }
   } catch (e) {
     return {'error': 'Connection error: $e'};
+  }
+}
+
+Future<User> getUserByIdF() async {
+  final token = await getAccessToken();
+  final userId = await getUserId();
+  final url = Uri.parse(Config.getUserById('$userId'));
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token',
+  });
+
+  if (response.statusCode == 200) {
+    return User.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load user');
   }
 }

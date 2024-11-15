@@ -4,6 +4,8 @@ import 'package:e_commerce_app_project/model/category.dart';
 import 'package:e_commerce_app_project/model/Product.dart';
 import 'package:e_commerce_app_project/model/dummy_data/category_data.dart';
 import 'package:e_commerce_app_project/model/dummy_data/product_data.dart';
+import 'package:e_commerce_app_project/services/user/categoryF.dart';
+import 'package:e_commerce_app_project/services/user/productF.dart';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -25,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
     'asset/image/carosel4.jpg',
   ];
 
+  List<dynamic> categories = [];
+  List<dynamic> products = [];
+
   int? _curentIndexImage = 0;
 
   @override
@@ -32,6 +37,28 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement dispose
     super.dispose();
     _searchController.dispose();
+  }
+
+  Future<void> getCategory() async {
+    final cateF = await getListCategoryUser();
+    setState(() {
+      categories = cateF;
+    });
+  }
+
+  Future<void> getNewestProduct() async {
+    final product4limitF = await get4Product();
+    setState(() {
+      products = product4limitF;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getNewestProduct();
+    getCategory();
   }
 
   @override
@@ -43,9 +70,6 @@ class _HomeScreenState extends State<HomeScreen> {
     var fontSizeNormal = screenWidth * 0.04;
 
     var isDark = MediaQuery.of(context).platformBrightness;
-
-    final List<Category> categories = getListCategory;
-    final List<Product> products = getProductData;
 
     return Container(
       width: double.infinity,
@@ -267,10 +291,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                               color: Colors.brown.withOpacity(0.4),
                               shape: BoxShape.circle),
-                          child: Image.asset(
+                          child: Image.network(
                             category.image,
                             width: screenWidth * 0.1,
                             height: screenHeight * 0.03,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(Icons.category),
                           ),
                         ),
                         const SizedBox(

@@ -48,6 +48,7 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
+    // print('Product from JSON: $json');
     return Product(
       id: json['_id'],
       name: json['name'] ?? '',
@@ -106,4 +107,9 @@ class Product {
   static String _genderAgeCategoryToString(GenderAgeCategory category) {
     return category.toString().split('.').last;
   }
+
+  // @override
+  // String toString() {
+  //   return 'Product{id: $id, name: $name, description: $description, price: $price, category: ${category?.id}}';
+  // }
 }

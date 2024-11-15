@@ -42,32 +42,32 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     var fontSizeNormal = screenWidth * 0.04;
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Stack(
-            children: [
-              Positioned(
-                top: 20,
-                left: 20,
-                child: Container(
-                  width: screenWidth * 0.12,
-                  height: screenWidth * 0.12,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                          width: 1,
-                          color: isDark != Brightness.dark
-                              ? Colors.brown
-                              : Colors.orange)),
-                  child: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      icon: Icon(Icons.arrow_back)),
-                ),
+        body: Stack(
+          children: [
+            Positioned(
+              top: 20,
+              left: 20,
+              child: Container(
+                width: screenWidth * 0.12,
+                height: screenWidth * 0.12,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        width: 1,
+                        color: isDark != Brightness.dark
+                            ? Colors.brown
+                            : Colors.orange)),
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.arrow_back)),
               ),
-              Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.2),
-                  padding: const EdgeInsets.all(20),
+            ),
+            Container(
+                margin: EdgeInsets.only(top: screenHeight * 0.2),
+                padding: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Text(
@@ -116,14 +116,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      ElevatedButton(
-                          style: buttonCustome,
-                          onPressed: _handleForgetPassword,
-                          child: Text('Next'))
+                      Container(
+                        width: screenWidth * 0.8,
+                        height: screenHeight * 0.06,
+                        child: ElevatedButton(
+                            style: buttonCustome,
+                            onPressed: _handleForgetPassword,
+                            child: Text('Next')),
+                      )
                     ],
-                  )),
-            ],
-          ),
+                  ),
+                )),
+          ],
         ),
       ),
     );

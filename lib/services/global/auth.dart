@@ -17,7 +17,6 @@ Future<User?> loginUser(String email, String password) async {
 
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
-    print(data);
 
     // Tạo đối tượng Token từ dữ liệu JSON
     User user = User.fromJson(data);
@@ -42,6 +41,10 @@ Future<User?> loginUser(String email, String password) async {
 
 Future<String?> getAccessToken() async {
   return await secureStorage.read(key: 'accessToken');
+}
+
+Future<String?> getUserId() async {
+  return await secureStorage.read(key: 'userId');
 }
 
 Future<Map<String, dynamic>> registerUser({
@@ -112,6 +115,31 @@ Future<String> verifyPasswordResetOTP(String email, String otp) async {
     } else {
       final errorData = jsonDecode(response.body);
       return errorData['message'];
+    }
+  } catch (e) {
+    return 'An error occurred: $e';
+  }
+}
+
+Future<String> resetPassword(String email, String password) async {
+  final url = Uri.parse(Config.resetPasswordUrl);
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'email': email, 'newPassword': password}),
+    );
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      return responseData['message'];
+    } else {
+      final errorData = jsonDecode(response.body);
+      if (errorData['message'] != null) {
+        return errorData['message'];
+      } else if (errorData['errors'] != null) {
+        return errorData['errors'].map((e) => e['message']).join(", ");
+      }
+      return 'Unknown error';
     }
   } catch (e) {
     return 'An error occurred: $e';

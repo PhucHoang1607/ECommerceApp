@@ -56,8 +56,11 @@ class User {
       //wishlists: List<Map<String, dynamic>>.from(json['wishlists'] ?? []),
       wishlists: json['wishlists'] != null
           ? List<WishListItems>.from(
-              json['wishlists'].map((x) => WishListItems.fromJson(x)))
+              (json['wishlists'] as List).map((x) => WishListItems.fromJson(x)))
           : [],
+      // wishlists: List<dynamic>.from(json['wishlists'] as List)
+      //     .map((x) => WishListItems.fromJson(x))
+      //     .toList(),
     );
   }
 
@@ -76,7 +79,7 @@ class User {
       'resetPasswordOTP': resetPasswordOTP,
       'resetPasswordOTPExpires': resetPasswordOTPExpires,
       'cart': cart,
-      'wishlists': wishlists,
+      'wishlists': wishlists?.map((item) => item.toJson()).toList(),
     };
   }
 }

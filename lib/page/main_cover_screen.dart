@@ -1,10 +1,13 @@
 import 'package:e_commerce_app_project/components/CustomeItemNavigation.dart';
+import 'package:e_commerce_app_project/model/user.dart';
 import 'package:e_commerce_app_project/page/cart/main_card_screen.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/product/main_product_screen.dart';
 import 'package:e_commerce_app_project/page/review_screen.dart';
 import 'package:e_commerce_app_project/page/user/user_screen.dart';
 import 'package:e_commerce_app_project/page/wishlist/wish_list_screen.dart';
+import 'package:e_commerce_app_project/services/global/auth.dart';
+import 'package:e_commerce_app_project/services/user/userF.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -37,6 +40,13 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
     setState(() {
       _isHide = !_isHide;
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserId();
   }
 
   @override
@@ -160,21 +170,19 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
                 : Container(),
             Positioned(
               right: screenWidth * 0.02,
-              bottom: screenHeight * 0.12,
+              bottom: screenHeight * 0.075,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.grey,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      width: 1,
-                    )),
+                  //color: Colors.grey,
+                  shape: BoxShape.circle,
+                ),
                 child: IconButton(
                   onPressed: _togglenavbarVisibility,
                   icon: Icon(
                     _isHide
                         ? Icons.arrow_forward_ios
                         : Icons.arrow_back_ios_new_sharp,
-                    color: Colors.white,
+                    color: Colors.red,
                   ),
                 ),
               ),

@@ -37,6 +37,8 @@ class Config {
   //USER
   static String get userPath => '$apiUrl/users';
   static String get categoriesPath => '$apiUrl/categories';
+  static String get productsPath => '$apiUrl/products';
+  static String get wishlistsPath => '$apiUrl/products';
 
   //Auth function
   static String get loginUrl => '$apiUrl/login';
@@ -49,6 +51,32 @@ class Config {
   //User function
   static String getUserById(String id) => '$userPath/$id';
   static String updateUserUrl(String id) => '$userPath/$id';
+
+  //GetProductUser
+  static String get getProductNewest => '$productsPath/limitproducts';
+  static String get getProductAll => '$productsPath/';
+
+  //GetCategoryUser
+  static String get getCategoryUser => '$categoriesPath/';
+  static String getCategoryIdUser(String id) => '$categoriesPath/$id';
+  static String getProductBycategoryId(String id) =>
+      '$categoriesPath/$id/products';
+
+  //Wish List User
+  static String getWishListUser(String id) => '$userPath/$id/wishlists';
+  static String addToWishListUser(String id) => '$userPath/$id/wishlists';
+  static String removeFromWishListUser(String id) => '$userPath/$id/wishlists';
+
+  //Cart User
+  static String getUserCart(String id) => '$userPath/$id/cart';
+  static String getUserCartCount(String id) => '$userPath/$id/cart/count';
+  static String getCartProductById(String id, String cartProductId) =>
+      '$userPath/$id/cart/$cartProductId';
+  static String addToCart(String id) => '$userPath/$id/cart';
+  static String modifiedProductQuantity(String id, String cartProductId) =>
+      '$userPath/$id/cart/$cartProductId';
+  static String removeFromCart(String id, String cartProductId) =>
+      '$userPath/$id/cart/$cartProductId';
 
   //ADMIN
   //==> User

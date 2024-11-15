@@ -1,4 +1,4 @@
-import 'package:e_commerce_app_project/model/Product.dart';
+import 'package:e_commerce_app_project/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +23,7 @@ class CardProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       // Không sử dụng Card, bỏ nền và shadow
       padding: EdgeInsets.all(12),
