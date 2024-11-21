@@ -65,7 +65,8 @@ class Config {
   //Wish List User
   static String getWishListUser(String id) => '$userPath/$id/wishlists';
   static String addToWishListUser(String id) => '$userPath/$id/wishlists';
-  static String removeFromWishListUser(String id) => '$userPath/$id/wishlists';
+  static String removeFromWishListUser(String id, String productId) =>
+      '$userPath/$id/wishlists/$productId';
 
   //Cart User
   static String getUserCart(String id) => '$userPath/$id/cart';

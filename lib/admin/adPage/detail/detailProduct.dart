@@ -98,20 +98,27 @@ class _DetailProductAdPState extends State<DetailProductAdP> {
                   ),
                   SizedBox(width: screenWidth * 0.01),
                   if (widget.product.color != null)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      //crossAxisAlignment: CrossAxisAlignment.start,
-                      children: widget.product.color!.map((hexColor) {
-                        Color color = Color(
-                            int.parse(hexColor.replaceFirst('#', '0xFF')));
-                        return Container(
-                          width: screenWidth * 0.07,
-                          height: screenHeight * 0.07,
-                          margin: EdgeInsets.only(right: screenWidth * 0.05),
-                          decoration: BoxDecoration(
-                              color: color, shape: BoxShape.circle),
-                        );
-                      }).toList(),
+                    Container(
+                      width: screenWidth * 0.42,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: widget.product.color!.map((hexColor) {
+                            Color color = Color(
+                                int.parse(hexColor.replaceFirst('#', '0xFF')));
+                            return Container(
+                              width: screenWidth * 0.07,
+                              height: screenHeight * 0.07,
+                              margin:
+                                  EdgeInsets.only(right: screenWidth * 0.05),
+                              decoration: BoxDecoration(
+                                  color: color, shape: BoxShape.circle),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                     ),
                 ],
               ),

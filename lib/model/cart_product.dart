@@ -1,12 +1,12 @@
 class CartProduct {
   final String id;
   final String product; // Tham chieu san pham
-  final double? quantity;
+  final int? quantity;
   final String? selectedSize;
   final String? selectedColour;
   final String productName;
   final String productImage;
-  final double productPrice;
+  final int productPrice;
   final DateTime reservationExpiry;
   final bool? reserved;
 
@@ -33,7 +33,7 @@ class CartProduct {
       productName: json['productName'],
       productImage: json['productImage'],
       productPrice: json['productPrice'],
-      reservationExpiry: json['reservationExpiry'] ?? '',
+      reservationExpiry: DateTime.parse(json['reservationExpiry']),
       reserved: json['reserved'] ?? 'false',
     );
   }

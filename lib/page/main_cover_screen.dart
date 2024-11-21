@@ -1,6 +1,6 @@
 import 'package:e_commerce_app_project/components/CustomeItemNavigation.dart';
 import 'package:e_commerce_app_project/model/user.dart';
-import 'package:e_commerce_app_project/page/cart/main_card_screen.dart';
+import 'package:e_commerce_app_project/page/cart/main_cart_screen.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/product/main_product_screen.dart';
 import 'package:e_commerce_app_project/page/review_screen.dart';
@@ -22,7 +22,7 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
   int _selectedIndex = 0;
   bool _isHide = true;
 
-  final List<Widget> _page = [
+  final List<Widget> _page = const [
     HomeScreen(),
     MainProductScreen(),
     WishListMainScreen(),
@@ -172,7 +172,7 @@ class _MainCoverScreenState extends State<MainCoverScreen> {
               right: screenWidth * 0.02,
               bottom: screenHeight * 0.075,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   //color: Colors.grey,
                   shape: BoxShape.circle,
                 ),

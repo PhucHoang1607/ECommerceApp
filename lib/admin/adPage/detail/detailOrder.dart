@@ -34,14 +34,50 @@ class _DetailOrderAdPState extends State<DetailOrderAdP> {
           child: Stack(
             children: [
               Container(
+                width: double.infinity,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       "Order ${widget.order.id.substring(0, 4)}",
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.roboto(
                           color: Colors.amberAccent,
                           fontSize: fontSizeHeader,
                           fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      widget.order.shippingAdress,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Status: ${widget.order.status.toString().split('.').last}',
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Phone: ${widget.order.phone}",
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Date Ordered:  \n ${widget.order.dateOrdered!.toIso8601String()}',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w500),
                     )
                   ],
                 ),
@@ -92,17 +128,26 @@ class _DetailOrderAdPState extends State<DetailOrderAdP> {
                                         widget.order.orderItems[index];
                                     return ListTile(
                                       leading: Image.network(
-                                        orderItem.productName,
+                                        orderItem.productImage,
                                         width: 50,
                                         height: 50,
                                         fit: BoxFit.cover,
                                       ),
-                                      title: Text(orderItem.productName),
+                                      title: Text(
+                                        orderItem.productName,
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20),
+                                      ),
                                       subtitle: Text(
                                         " ${NumberFormat("#,##0", "vi_VN").format(orderItem.productPrice)} VND",
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 15),
                                       ),
-                                      trailing:
-                                          Text('Qty: ${orderItem.quantity}'),
+                                      trailing: Text(
+                                        'Qty: ${orderItem.quantity}',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 20),
+                                      ),
                                     );
                                   }),
                             )

@@ -27,9 +27,10 @@ Future<List<WishListItems>> getUserWishList() async {
   }
 }
 
-Future<void> addToWishList(String id, String productId) async {
-  final url = Uri.parse(Config.addToWishListUser(id));
-  final token = getAccessToken();
+Future<void> addToWishList(String productId) async {
+  final userId = await getUserId();
+  final url = Uri.parse(Config.addToWishListUser("$userId"));
+  final token = await getAccessToken();
   final response = await http.post(
     url,
     headers: {
@@ -44,9 +45,10 @@ Future<void> addToWishList(String id, String productId) async {
   }
 }
 
-Future<void> removeFromWishList(String userId, String productId) async {
-  final url = Uri.parse(Config.removeFromWishListUser(userId));
-  final token = getAccessToken();
+Future<void> removeFromWishList(String productId) async {
+  final userId = await getUserId();
+  final url = Uri.parse(Config.removeFromWishListUser('$userId', '$productId'));
+  final token = await getAccessToken();
   final response = await http.delete(
     url,
     headers: {

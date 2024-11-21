@@ -11,7 +11,7 @@ class User {
   final DateTime? dateOfBirth;
   final String phone;
   final bool isAdmin;
-  final double? resetPasswordOTP;
+  final int? resetPasswordOTP;
   final DateTime? resetPasswordOTPExpires;
   final List<dynamic>? cart;
   //final List<Map<String, dynamic>>? wishlists;
@@ -47,7 +47,7 @@ class User {
           DateTime.tryParse(json['dateOfBirth'] ?? '') ?? DateTime.now(),
       phone: json['phone'] ?? '',
       isAdmin: json['isAdmin'] ?? false,
-      resetPasswordOTP: json['resetPasswordOTP'],
+      resetPasswordOTP: json['resetPasswordOTP'] ?? 0,
       resetPasswordOTPExpires: json['resetPasswordOTPExpires'] != null
           ? DateTime.parse(json['resetPasswordOTPExpires'])
           : DateTime(

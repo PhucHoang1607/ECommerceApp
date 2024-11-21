@@ -85,10 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const Text(
                       'Welcome!',
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: Color.fromARGB(255, 77, 71, 71)),
                     ),
                     Text(
-                      "Hoang Phuc",
+                      "Make your decision",
                       style: TextStyle(
                         fontSize: fontSizeNormal,
                         fontWeight: FontWeight.w500,

@@ -1,6 +1,7 @@
 import 'package:e_commerce_app_project/admin/adPage/adHome.dart';
 import 'package:e_commerce_app_project/admin/adPage/adMain.dart';
 import 'package:e_commerce_app_project/core/extension/change_theme.dart';
+import 'package:e_commerce_app_project/page/main_cover_screen.dart';
 import 'package:e_commerce_app_project/page/started/splashed_screen.dart';
 import 'package:e_commerce_app_project/page/user/sign_in.dart';
 import 'package:flutter/material.dart';

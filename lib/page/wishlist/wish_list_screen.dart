@@ -4,6 +4,7 @@ import 'package:e_commerce_app_project/services/global/auth.dart';
 import 'package:e_commerce_app_project/services/user/wishlistF.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class WishListMainScreen extends StatefulWidget {
   const WishListMainScreen({
@@ -24,6 +25,18 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
     });
   }
 
+  Future<void> deleteItemWishList(String productId) async {
+    await removeFromWishList(productId);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Removed from WishList')),
+    );
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(content: Text('Failed to remove from WishList')),
+    //   );
+    // }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,7 +55,7 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
         child: SafeArea(
       child: Container(
         margin: const EdgeInsets.only(top: 30),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(5),
         height: double.infinity,
         width: double.infinity,
         child: Column(
@@ -51,7 +64,11 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
               child: Text(
                 'Wish List',
                 style: TextStyle(
-                    fontSize: fontSizeHeader, fontWeight: FontWeight.bold),
+                    color: isDark != Brightness.dark
+                        ? Colors.brown
+                        : const Color.fromARGB(255, 255, 106, 51),
+                    fontSize: fontSizeHeader,
+                    fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(
@@ -59,6 +76,13 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
             ),
             Expanded(
               child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 243, 183, 116),
+                    border: Border.all(width: 0.5, color: Colors.grey),
+                    borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        topLeft: Radius.circular(30))),
                 child: GridView.builder(
                   itemCount: wishList.length,
                   itemBuilder: (context, index) {
@@ -69,6 +93,7 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
                         Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
+                              color: Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(20),
                               border:
                                   Border.all(width: 1, color: Colors.black)),
@@ -81,31 +106,32 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
                                 width: screenWidth * 0.2,
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Text(
-                                      item.productName,
-                                      style: GoogleFonts.roboto(
-                                          fontSize: fontSizeNormal,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      item.productPrice.toString(),
-                                    )
-                                  ],
-                                ),
-                                IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.delete))
-                              ],
+                            Text(
+                              item.productName,
+                              style: GoogleFonts.roboto(
+                                  fontSize: fontSizeNormal,
+                                  fontWeight: FontWeight.w500),
                             ),
+                            Text(
+                              "${NumberFormat("#,##0", "vi_VN").format(item.productPrice)} VND",
+                            ),
+                            ElevatedButton(
+                                style: const ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStatePropertyAll(Colors.red)),
+                                onPressed: () =>
+                                    deleteItemWishList(item.productId),
+                                child: Text(
+                                  'Remove',
+                                  style: GoogleFonts.roboto(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                )),
                           ]),
                         ),
                         Positioned(
                             top: 8,
-                            right: 10,
+                            right: 5,
                             child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
@@ -124,46 +150,11 @@ class _WishListMainScreenState extends State<WishListMainScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20,
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.67,
                   ),
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Container(
-            //     child: FutureBuilder<List<WishListItems>>(
-            //         future: getUserWishList(),
-            //         builder: (context, snapshot) {
-            //           if (snapshot.connectionState == ConnectionState.waiting) {
-            //             return const Center(child: CircularProgressIndicator());
-            //           } else if (snapshot.hasError) {
-            //             return Center(child: Text('Error: ${snapshot.error}'));
-            //           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            //             return const Center(
-            //                 child: Text('No items in wishlist'));
-            //           } else {
-            //             List<dynamic> wishList = snapshot.data!;
-            //             print(wishList);
-            //             print(
-            //                 wishList.map((item) => item.productName).toList());
-            //             return ListView.builder(
-            //                 itemCount: wishList.length,
-            //                 itemBuilder: (context, index) {
-            //                   final item = wishList[index];
-            //                   return ListTile(
-            //                     contentPadding: EdgeInsets.all(8),
-            //                     leading: Container(
-            //                         width: 60,
-            //                         height: 60,
-            //                         child: Image.network(item.productImage)),
-            //                     title: Text(item.productName),
-            //                     subtitle: Text('\$${item.productPrice}'),
-            //                   );
-            //                 });
-            //           }
-            //         }),
-            //   ),
-            // ),
           ],
         ),
       ),

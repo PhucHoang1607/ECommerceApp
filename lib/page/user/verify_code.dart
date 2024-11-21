@@ -171,8 +171,8 @@ class _VerifyCodeEmailPageState extends State<VerifyCodeEmailPage> {
                     height: 20,
                   ),
                   Container(
-                    width: screenWidth * 0.05,
-                    height: screenHeight * 0.03,
+                    width: screenWidth * 0.4,
+                    height: screenHeight * 0.05,
                     child: ElevatedButton(
                         style: buttonCustome,
                         onPressed: _verifyOtp,
