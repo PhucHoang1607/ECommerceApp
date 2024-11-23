@@ -1,4 +1,6 @@
+import 'package:e_commerce_app_project/components/little_components.dart';
 import 'package:e_commerce_app_project/model/cart_product.dart';
+import 'package:e_commerce_app_project/page/cart/checkoutCod.dart';
 import 'package:e_commerce_app_project/page/home.dart';
 import 'package:e_commerce_app_project/page/main_cover_screen.dart';
 import 'package:e_commerce_app_project/services/user/cartF.dart';
@@ -15,11 +17,17 @@ class MainCartScreen extends StatefulWidget {
 
 class _MainCartScreenState extends State<MainCartScreen> {
   List<CartProduct> cartProductList = [];
+  int? getTotalPrice;
+
+  late int quantity;
 
   Future<void> getUserCartItems() async {
     final itemList = await getUserCart();
+    final totalprice = await getTotalCartPrice();
+    print(totalprice);
     setState(() {
       cartProductList = itemList;
+      getTotalPrice = totalprice;
     });
   }
 
@@ -28,6 +36,52 @@ class _MainCartScreenState extends State<MainCartScreen> {
     // TODO: implement initState
     super.initState();
     getUserCartItems();
+  }
+
+  _openOverlayPaymentMethod() {
+    showModalBottomSheet(
+        useSafeArea: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (page) => LayoutBuilder(builder: (ctx, constraints) {
+              var screenWidth = MediaQuery.of(context).size.width;
+              var screenHeight = MediaQuery.of(context).size.height;
+              return Container(
+                width: double.infinity,
+                height: screenHeight * 0.3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Choose your payment method',
+                      style: GoogleFonts.roboto(
+                          fontSize: screenWidth * 0.06,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        style: buttonCustome,
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (page) => CheckoutCodScreen(
+                                    cartProducts: cartProductList))),
+                        child: Container(
+                            padding: const EdgeInsets.only(
+                                left: 30, right: 30, top: 10, bottom: 10),
+                            child: const Text('Cash'))),
+                    ElevatedButton(
+                        style: buttonCustome,
+                        onPressed: () {},
+                        child: Container(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, top: 10, bottom: 10),
+                            child: const Text('Payment Card')))
+                  ],
+                ),
+              );
+            }));
   }
 
   @override
@@ -48,7 +102,7 @@ class _MainCartScreenState extends State<MainCartScreen> {
               width: double.infinity,
               height: double.infinity,
               padding: const EdgeInsets.only(top: 20),
-              margin: EdgeInsets.all(20),
+              margin: EdgeInsets.all(10),
               child: Column(
                 children: [
                   Text(
@@ -80,6 +134,40 @@ class _MainCartScreenState extends State<MainCartScreen> {
                               itemCount: cartProductList.length,
                               itemBuilder: (context, index) {
                                 final item = cartProductList[index];
+
+                                void increaseQuantity() async {
+                                  final sucess = await modifiedProductQuantity(
+                                      newQuantity: item.quantity! + 1,
+                                      cartProductId: item.id);
+                                  if (sucess) {
+                                    setState(() {
+                                      item.quantity = item.quantity! + 1;
+                                    });
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              'Failed to increase quantity')),
+                                    );
+                                  }
+                                }
+
+                                void decreaseQuantity() async {
+                                  final sucess = await modifiedProductQuantity(
+                                      newQuantity: item.quantity! - 1,
+                                      cartProductId: item.id);
+                                  if (sucess) {
+                                    setState(() {
+                                      item.quantity = item.quantity! - 1;
+                                    });
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Failed to decrease quantity')));
+                                  }
+                                }
+
                                 return Container(
                                   margin: const EdgeInsets.only(bottom: 15),
                                   child: Row(
@@ -97,32 +185,80 @@ class _MainCartScreenState extends State<MainCartScreen> {
                                       const SizedBox(
                                         width: 10,
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Container(
+                                        width: screenWidth * 0.35,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              item.productName,
+                                              style: GoogleFonts.roboto(
+                                                  fontSize: fontSizeMedium,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              ' Size: ${item.selectedSize}',
+                                              style: TextStyle(
+                                                  fontSize: screenWidth * 0.042,
+                                                  color: Colors.grey),
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              '${NumberFormat('#,##0', 'vi_VN').format(item.productPrice)} VND',
+                                              style: TextStyle(
+                                                  fontSize:
+                                                      screenWidth * 0.042),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          Text(
-                                            item.productName,
-                                            style: GoogleFonts.roboto(
-                                                fontSize: fontSizeMedium,
-                                                fontWeight: FontWeight.w500),
+                                          IconButton(
+                                            onPressed: decreaseQuantity,
+                                            icon: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child:
+                                                    const Icon(Icons.remove)),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
                                           Text(
-                                            ' Size: ${item.selectedSize}',
+                                            item.quantity.toString(),
                                             style: TextStyle(
-                                                fontSize: screenWidth * 0.042,
-                                                color: Colors.grey),
+                                                fontSize: fontSizeNormal,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Text(
-                                            '${NumberFormat('#,##0', 'vi_VN').format(item.productPrice)} VND',
-                                            style: TextStyle(
-                                                fontSize: screenWidth * 0.042),
+                                          IconButton(
+                                            onPressed: increaseQuantity,
+                                            icon: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                  color: isDark !=
+                                                          Brightness.dark
+                                                      ? Colors.brown
+                                                      : const Color.fromARGB(
+                                                          255, 255, 106, 51),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.add,
+                                                  color: Colors.white,
+                                                )),
                                           ),
                                         ],
                                       ),
@@ -132,7 +268,7 @@ class _MainCartScreenState extends State<MainCartScreen> {
                               },
                             ),
                           ),
-                        )
+                        ),
                 ],
               ),
             ),
@@ -142,7 +278,7 @@ class _MainCartScreenState extends State<MainCartScreen> {
                     bottom: 0,
                     child: Container(
                       width: screenWidth,
-                      height: screenHeight * 0.28,
+                      height: screenHeight * 0.34,
                       padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                           color: Color.fromARGB(255, 250, 199, 140),
@@ -194,7 +330,7 @@ class _MainCartScreenState extends State<MainCartScreen> {
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '${NumberFormat('#,##0', 'vi_VN').format(475000)} VND',
+                                '${NumberFormat('#,##0', 'vi_VN').format(getTotalPrice)} VND',
                                 style: GoogleFonts.roboto(
                                     fontSize: screenWidth * 0.045,
                                     fontWeight: FontWeight.w500),
@@ -217,7 +353,7 @@ class _MainCartScreenState extends State<MainCartScreen> {
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '${NumberFormat('#,##0', 'vi_VN').format(5000)} VND',
+                                '${NumberFormat('#,##0', 'vi_VN').format(0000)} VND',
                                 style: GoogleFonts.roboto(
                                     fontSize: screenWidth * 0.045,
                                     fontWeight: FontWeight.w500),
@@ -247,16 +383,39 @@ class _MainCartScreenState extends State<MainCartScreen> {
                                     fontWeight: FontWeight.w500),
                               ),
                               Text(
-                                '${NumberFormat('#,##0', 'vi_VN').format(485000)} VND',
+                                '${NumberFormat('#,##0', 'vi_VN').format(getTotalPrice)} VND',
                                 style: GoogleFonts.roboto(
                                     fontSize: screenWidth * 0.045,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          ElevatedButton(
+                            onPressed: _openOverlayPaymentMethod,
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    isDark != Brightness.dark
+                                        ? Colors.brown
+                                        : const Color.fromARGB(
+                                            255, 255, 106, 51))),
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  top: 10, bottom: 10, left: 20, right: 20),
+                              child: Text(
+                                'Proceed to Checkout',
+                                style: GoogleFonts.roboto(
+                                    fontSize: fontSizeMedium,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ))
+                    ),
+                  ),
           ],
         ),
       ),

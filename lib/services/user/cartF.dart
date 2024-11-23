@@ -28,6 +28,13 @@ Future<List<CartProduct>> getUserCart() async {
   }
 }
 
+Future<int> getTotalCartPrice() async {
+  final cartProducts = await getUserCart();
+  final totalPrice = cartProducts.fold(
+      0, (sum, item) => sum + (item.productPrice * item.quantity!.toInt()));
+  return totalPrice;
+}
+
 Future<void> addToCart({
   required String productId,
   required int quantity,
@@ -55,5 +62,34 @@ Future<void> addToCart({
     print('Product Added to cart sucessfully');
   } else {
     throw Exception('Fail to Added to Cart: ${response.statusCode}');
+  }
+}
+
+Future<bool> modifiedProductQuantity(
+    {required int newQuantity, required String cartProductId}) async {
+  final id = await getUserId();
+  final token = await getAccessToken();
+  final url =
+      Uri.parse(Config.modifiedProductQuantity('$id', '$cartProductId'));
+  try {
+    final response = await http.put(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'quantity': newQuantity,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print('Error modifying quantity: $e');
+    return false; // Lỗi
   }
 }

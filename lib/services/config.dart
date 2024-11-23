@@ -79,6 +79,9 @@ class Config {
   static String removeFromCart(String id, String cartProductId) =>
       '$userPath/$id/cart/$cartProductId';
 
+  //Checkout
+  static String get checkoutCOD => '$apiUrl/checkout/checkout-cod';
+
   //ADMIN
   //==> User
   static String get userGetAdUrl => '$adminPath/user';

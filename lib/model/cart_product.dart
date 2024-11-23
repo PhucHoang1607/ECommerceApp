@@ -1,7 +1,7 @@
 class CartProduct {
   final String id;
   final String product; // Tham chieu san pham
-  final int? quantity;
+  int? quantity;
   final String? selectedSize;
   final String? selectedColour;
   final String productName;
@@ -48,7 +48,7 @@ class CartProduct {
       'productName': productName,
       'productImage': productImage,
       'productPrice': productPrice,
-      'reservationExpiry': reservationExpiry,
+      'reservationExpiry': reservationExpiry.toIso8601String(),
       'reserved': reserved,
     };
   }
